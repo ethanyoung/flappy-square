@@ -11,6 +11,10 @@ var mainState = {
 	},
 
 	create: function() {
+		this.score = 0;
+		var style = { font: "30px Arial", fill: "#ffffff" };
+		this.labelScore = game.add.text(20, 20, "0", style);
+
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		bird = game.add.sprite(100, 245, 'bird');
@@ -62,7 +66,10 @@ var mainState = {
 		for (var i = 0; i < 8; i++)
 			if (i != hole && i != hole + 1)
 				this.addPipe(400, i * 60 + 10);
-	}
+
+		this.score += 1;
+		this.labelScore.setText(this.score);
+	},
 };
 
 game.state.add('main', mainState);
