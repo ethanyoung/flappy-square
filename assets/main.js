@@ -33,6 +33,8 @@ var mainState = {
 	update: function() {
 		if (bird.inWorld == false)
 			this.restartGame();
+
+		game.physics.arcade.overlap(bird, pipes, this.restartGame, null, this);
 	},
 
 	jump: function() {
