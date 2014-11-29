@@ -7,7 +7,8 @@ var mainState = {
 	preload: function() {
 		game.stage.backgroundColor = '#71c5cf';
 		game.load.image('bird', 'assets/bird.png');
-		game.load.image('pipe', 'assets/pipe.png')
+		game.load.image('pipe', 'assets/pipe.png');
+		game.load.audio('jump', 'assets/jump.wav')
 	},
 
 	create: function() {
@@ -19,6 +20,8 @@ var mainState = {
 
 		bird = game.add.sprite(100, 245, 'bird');
 		bird.anchor.setTo(-0.2, 0.5);
+
+		this.jumpSound = game.add.audio('jump');
 
 		game.physics.enable(bird, Phaser.Physics.ARCADE)
 
@@ -50,6 +53,8 @@ var mainState = {
 		if (!bird.alive)
 			return;
 
+		this.jumpSound.play();
+		
 		bird.body.velocity.y = -350;
 
 		var animation = game.add.tween(bird)
