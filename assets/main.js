@@ -40,13 +40,16 @@ var mainState = {
 		if (bird.inWorld == false)
 			this.restartGame();
 
-		game.physics.arcade.overlap(bird, pipes, this.restartGame, null, this);
+		game.physics.arcade.overlap(bird, pipes, this.hitPipe, null, this);
 
 		if (bird.angle < 20)
 			bird.angle +=1
 	},
 
 	jump: function() {
+		if (!bird.alive)
+			return;
+
 		bird.body.velocity.y = -350;
 
 		var animation = game.add.tween(bird)
@@ -54,6 +57,19 @@ var mainState = {
 		animation.to({angle: -20}, 100);
 
 		animation.start();
+	},
+
+	hitPipe: function() {
+		if (!bird.alive)
+			return;
+
+		bird.alive = false;
+
+		game.time.events.remove(this.timer);
+
+		pipes.forEachAlive(function(p) {
+			p.body.velocity.x = 0;
+		}, this);
 	},
 
 	restartGame: function () {
